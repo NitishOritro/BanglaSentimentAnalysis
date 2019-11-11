@@ -10,7 +10,7 @@ it takes a word then gives which parts of speech it is as a tuple as
 """
 
 from xml.dom import minidom
-
+wordTuple = ()
 nouns=[]
 prons=[]
 verbs=[]
@@ -435,24 +435,26 @@ gettinPosLen20()
 gettinProns()
 gettinVerbs()
 class pos:
-    def posTagging(self, word):
-        global prons,adj,adv,conj,verbs
-        if word not in prons:
-            if word not in adj:
-                if word not in adv:
-                    if word not in conj:
-                        if word not in verbs:
-                            return (word,"noun")
-                        else:
-                            return(word,"verb")
-                    else:
-                        return (word,"conj")
-                else:
-                    return (word,"adv")
-            else:
-                return (word,"adj")
-        else:
-            return (word,"pron")
+    def posTagging(self, wordlist):
+        global prons,adj,adv,conj,verbs, wordTuple
+
+        for i in range(0, len(wordlist)):
+            if wordlist[i] in prons:
+                wordTuple = (wordlist[i], "pron")
+            elif wordlist[i] in adj:
+                wordTuple = (wordlist[i], "adj")
+            elif wordlist[i] in adv:
+                wordTuple = (wordlist[i], "adv")
+            elif wordlist[i] in conj:
+                wordTuple = (wordlist[i], "conj")
+            elif wordlist[i] in verbs:
+                wordTuple = (wordlist[i], "verb")
+            PosWordList.append(wordTuple)
+
+        return PosWordList
         
 a=pos()
-print(a.posTagging('এবং'))
+wordlist = ["এবং","ও","কিন্তু","আর"]
+wordTuple = ()
+PosWordList = []
+print(a.posTagging(wordlist))
